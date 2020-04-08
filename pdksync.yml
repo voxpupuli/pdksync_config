@@ -1,0 +1,7 @@
+---
+namespace: 'voxpupuli'
+pdk_templates_prefix: 'vp-'
+pdk_templates_ref: 1.17.0
+pdk_templates_url: 'https://github.com/voxpupuli/pdk-templates.git'
+module_is_authoritive: false
+git_base_uri: 'git@github.com'
