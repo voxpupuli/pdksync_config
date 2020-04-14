@@ -1,0 +1,41 @@
+dist: bionic
+language: ruby
+cache: bundler
+before_install:
+- gem install bundler
+- bundle -v
+- rm -f Gemfile.lock
+- gem update --system
+- gem --version
+- bundle -v
+script:
+- bundle exec $CHECK
+rvm:
+- 2.6.5
+stages:
+ - name: test
+ - name: deploy
+   if: branch = master
+matrix:
+  fast_finish: true
+  include:
+  - env: CHECK="rake validate" 
+    stage: test
+  - env: GITHUB_TOKEN=sdfasdfa CHECK='rake pdksync:show_config'
+    stage: test
+  - env: CHECK='rake pdksync'
+    if: branch = master
+    stage: deploy
+    branches:
+      only:
+      - master
+      - "/^v\\d/"
+
+notifications:
+  email: false
+  irc:
+    on_success: always
+    on_failure: always
+    channels:
+    - chat.freenode.org#voxpupuli-notifications
+  webhooks: https://voxpupu.li/incoming/travis  
